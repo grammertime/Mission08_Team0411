@@ -15,7 +15,7 @@ builder.Services.AddDbContext<TaskContext>(options =>
 // Register the Repository Pattern
 builder.Services.AddScoped<ITaskRepository, EFTaskRepository>();
 
-// Build the app (Only declared ONCE this time!)
+// Build the app
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
