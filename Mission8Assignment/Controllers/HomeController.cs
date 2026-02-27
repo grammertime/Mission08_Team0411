@@ -1,25 +1,87 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Mission8Assignment.Models;
-using System.Diagnostics;
+using Mission08_Team0411.Models;
+using System.Linq;
 
-namespace Mission8Assignment.Controllers
+namespace Mission08_Team0411.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ITaskRepository _repo;
+
+        // Constructor Injection for the Repository Pattern
+        public HomeController(ITaskRepository repo)
+        {
+            _repo = repo;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Quadrants()
         {
-            return View();
+            // Only display tasks that have not been completed
+            var tasks = _repo.Tasks
+                .Include(t => t.Category) // Load the related Category data
+                .Where(t => t.Completed == false)
+                .ToList();
+
+            return View(tasks);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult EditTask(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // Pass the categories to the ViewBag for the dropdown
+            ViewBag.Categories = _repo.Categories.ToList();
+
+            if (id == 0) // Add new task
+            {
+                return View("EditTask", new TaskItem());
+            }
+            else // Edit existing task
+            {
+                var task = _repo.Tasks.SingleOrDefault(t => t.TaskId == id);
+                return View("EditTask", task);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditTask(TaskItem t)
+        {
+            if (ModelState.IsValid)
+            {
+                if (t.TaskId == 0)
+                {
+                    _repo.AddTask(t);
+                }
+                else
+                {
+                    _repo.UpdateTask(t);
+                }
+                return RedirectToAction("Quadrants");
+            }
+
+            // If model is invalid, reload the form and categories
+            ViewBag.Categories = _repo.Categories.ToList();
+            return View(t);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteTask(int id)
+        {
+            var task = _repo.Tasks.SingleOrDefault(t => t.TaskId == id);
+            return View(task);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTask(TaskItem t)
+        {
+            _repo.DeleteTask(t);
+            return RedirectToAction("Quadrants");
         }
     }
 }

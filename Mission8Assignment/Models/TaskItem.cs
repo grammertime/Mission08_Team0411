@@ -10,7 +10,7 @@ namespace Mission08_Team0411.Models
         public int TaskId { get; set; }
 
         [Required(ErrorMessage = "Task name is required.")]
-        public string TaskName { get; set; }
+        public string? TaskName { get; set; }
 
         public DateTime? DueDate { get; set; }
 
@@ -20,7 +20,7 @@ namespace Mission08_Team0411.Models
         // Foreign Key Relationship
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
         public bool Completed { get; set; }
     }

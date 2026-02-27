@@ -6,6 +6,6 @@ namespace Mission08_Team0411.Models // Use your specific namespace
     {
         [Key]
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
     }
 }

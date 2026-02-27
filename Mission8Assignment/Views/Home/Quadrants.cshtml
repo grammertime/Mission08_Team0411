@@ -1,0 +1,101 @@
+﻿@model IEnumerable<TaskItem>
+
+@{
+    ViewData["Title"] = "Quadrants Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Stephen Covey's Time Management Matrix</h2>
+
+    <div class="row">
+        <div class="col-md-6 border p-3 mb-3">
+            <h4 class="text-danger">Quadrant I: Important / Urgent</h4>
+            <hr />
+            @if (Model != null)
+            {
+                @foreach (var t in Model.Where(x => x.Quadrant == 1))
+                {
+                    <div class="card mb-2 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@t.TaskName</h5>
+                            <p class="card-text mb-2">
+                                <strong>Due:</strong> @(t.DueDate?.ToShortDateString() ?? "No Date") <br />
+                                <strong>Category:</strong> @t.Category?.CategoryName
+                            </p>
+                            <a asp-controller="Home" asp-action="EditTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="col-md-6 border p-3 mb-3">
+            <h4 class="text-warning">Quadrant II: Important / Not Urgent</h4>
+            <hr />
+            @if (Model != null)
+            {
+                @foreach (var t in Model.Where(x => x.Quadrant == 2))
+                {
+                    <div class="card mb-2 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@t.TaskName</h5>
+                            <p class="card-text mb-2">
+                                <strong>Due:</strong> @(t.DueDate?.ToShortDateString() ?? "No Date") <br />
+                                <strong>Category:</strong> @t.Category?.CategoryName
+                            </p>
+                            <a asp-controller="Home" asp-action="EditTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 border p-3 mb-3">
+            <h4 class="text-info">Quadrant III: Not Important / Urgent</h4>
+            <hr />
+            @if (Model != null)
+            {
+                @foreach (var t in Model.Where(x => x.Quadrant == 3))
+                {
+                    <div class="card mb-2 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@t.TaskName</h5>
+                            <p class="card-text mb-2">
+                                <strong>Due:</strong> @(t.DueDate?.ToShortDateString() ?? "No Date") <br />
+                                <strong>Category:</strong> @t.Category?.CategoryName
+                            </p>
+                            <a asp-controller="Home" asp-action="EditTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="col-md-6 border p-3 mb-3">
+            <h4 class="text-secondary">Quadrant IV: Not Important / Not Urgent</h4>
+            <hr />
+            @if (Model != null)
+            {
+                @foreach (var t in Model.Where(x => x.Quadrant == 4))
+                {
+                    <div class="card mb-2 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@t.TaskName</h5>
+                            <p class="card-text mb-2">
+                                <strong>Due:</strong> @(t.DueDate?.ToShortDateString() ?? "No Date") <br />
+                                <strong>Category:</strong> @t.Category?.CategoryName
+                            </p>
+                            <a asp-controller="Home" asp-action="EditTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteTask" asp-route-id="@t.TaskId" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

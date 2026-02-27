@@ -1,4 +1,4 @@
-namespace Mission8Assignment.Models
+namespace Mission08_Team0411.Models
 {
     public class ErrorViewModel
     {

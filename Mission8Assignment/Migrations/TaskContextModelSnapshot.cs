@@ -7,7 +7,7 @@ using Mission08_Team0411.Models;
 
 #nullable disable
 
-namespace Mission8Assignment.Migrations
+namespace Mission08_Team0411.Migrations
 {
     [DbContext(typeof(TaskContext))]
     partial class TaskContextModelSnapshot : ModelSnapshot
